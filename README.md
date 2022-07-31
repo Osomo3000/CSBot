@@ -1,4 +1,10 @@
 # Requirements
+* Binance API
+* Technical Analysis Library (TA-Lib)
+* Pandas
+* Matplotlib und Matplotlib Finance
+* Numpy
+
 Hinweis: Um das Talib package nutzen zu können, muss zuerst die TA-Lib library installiert werden: https://ta-lib.org/hdr_dw.html
 
 ```python
