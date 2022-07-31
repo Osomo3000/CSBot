@@ -14,15 +14,14 @@ import os
 load_dotenv()
 
 
-
-api_key = os.getenv("API_KEY") 
+# Binance API data
+api_key = os.getenv("API_KEY")
 secret_key = os.getenv("SECRET_KEY")
 
 client = Client(api_key, secret_key)
 
-
 def getData(symbol, interval, past):
-  data = pd.DataFrame(client.get_historical_klines(symbol,interval,past + 'min ago UTC+1'))
+  data = pd.DataFrame(client.get_historical_klines(symbol,interval,past + 'min ago UTC'))
   data = data.iloc[:,:5]
   data.columns = ['Time', 'Open', 'High', 'Low', 'Close']
   data = data.set_index('Time')
@@ -34,11 +33,10 @@ def getData(symbol, interval, past):
 df = getData('ADAEUR', '1m', '50')
 
 
-
 def calcRSI (df):
   df['RSI'] = ta.RSI(np.array(df['Close']),timeperiod = 14)
+  df['DIFF'] = df['Open'] - df['Close']
   df.dropna(inplace=True)
-
 
 
 def strategy(pair,interval,past):
@@ -48,8 +46,7 @@ def strategy(pair,interval,past):
   print (f'Current RSI Value is ' + str(df.RSI.iloc[-1]))
 
 
-
-
+calcRSI(df)
 
 print(df)
 
