@@ -1,3 +1,13 @@
+# Requirements
+Hinweis: Um das Talib package nutzen zu können, muss zuerst die TA-Lib library installiert werden: https://ta-lib.org/hdr_dw.html
+
+```python
+pip install -r requirements.txt
+```
+
+
+
+
 # TODO
 - [X] RSI einbinden
 - [ ] Bollinger Range Top
