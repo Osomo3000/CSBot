@@ -1,3 +1,3 @@
 # CSBot
-- [X] (RSI einbinden)
-- [ ] (Bollinger Bands einbinden)
+- [X] RSI einbinden
+- [ ] Bollinger Bands einbinden
