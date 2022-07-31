@@ -9,16 +9,23 @@ import talib as ta
 import numpy as np
 from dotenv import load_dotenv
 import os
+import requests
 
 
 load_dotenv()
-
 
 # Binance API data
 api_key = os.getenv("API_KEY")
 secret_key = os.getenv("SECRET_KEY")
 
 client = Client(api_key, secret_key)
+
+
+def telegram_bot_sendtext(bot_message):
+   bot_token = os.getenv("BOT_TOKEN")
+   bot_chatID = os.getenv("BOT_CHATID")
+   send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + bot_chatID + '&parse_mode=Markdown&text=' + bot_message
+   response = requests.get(send_text)
 
 def getData(symbol, interval, past):
   data = pd.DataFrame(client.get_historical_klines(symbol,interval,past + 'min ago UTC'))
@@ -42,13 +49,10 @@ def calcRSI (df):
 def strategy(pair,interval,past):
   df = getData(pair,interval,past)
   calcRSI(df)
-  print (f'Current Close Price is ' + str(df.Close.iloc[-1]))
-  print (f'Current RSI Value is ' + str(df.RSI.iloc[-1]))
+  telegram_bot_sendtext(f'Coin: Cardano(ADA)\nCurrent Open Price is' + str(df.Open.iloc[-1])+ '\nCurrent Close Price is ' + str(df.Close.iloc[-1]) + '\nCurrent Diff Open/Close is ' + str(df.Open.iloc[-1] - df.Close.iloc[-1]) + '\nCurrent RSI Value is ' + str(int(df.RSI.iloc[-1])))
 
 
-calcRSI(df)
-
-print(df)
+strategy('ADAEUR', '1m', '50')
 
 
 
