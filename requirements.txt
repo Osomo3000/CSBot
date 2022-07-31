@@ -1,0 +1,7 @@
+python-binance
+pandas
+bta-lib
+mplfinance
+TA-Lib
+numpy
+dotenv
