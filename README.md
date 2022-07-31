@@ -1,3 +1,8 @@
+# Übersicht
+1. Allgemein
+2. Quellen
+
+
 # Requirements
 * Binance API
 * Technical Analysis Library (TA-Lib)
