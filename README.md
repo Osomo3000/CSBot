@@ -4,6 +4,7 @@
 * Pandas
 * Matplotlib und Matplotlib Finance
 * Numpy
+* (Telegram-Bot für Benachrichtigungen => API + ChatID)
 
 Hinweis: Um das Talib package nutzen zu können, muss zuerst die TA-Lib library installiert werden: https://ta-lib.org/hdr_dw.html
 
