@@ -37,7 +37,7 @@ def getData(symbol, interval, past):
   return data
 
 
-df = getData('ADAEUR', '1m', '50')
+#df = getData('ADAEUR', '1m', '50')
 
 
 def calcRSI (df):
@@ -49,10 +49,23 @@ def calcRSI (df):
 def strategy(pair,interval,past):
   df = getData(pair,interval,past)
   calcRSI(df)
-  telegram_bot_sendtext(f'Coin: Cardano(ADA)\nCurrent Open Price is' + str(df.Open.iloc[-1])+ '\nCurrent Close Price is ' + str(df.Close.iloc[-1]) + '\nCurrent Diff Open/Close is ' + str(df.Open.iloc[-1] - df.Close.iloc[-1]) + '\nCurrent RSI Value is ' + str(int(df.RSI.iloc[-1])))
+  diff = df.Open.iloc[-1] - df.Close.iloc[-1]
+  rsi = int(df.RSI.iloc[-1])
+  if (rsi > 0) and (rsi < 20):
+   rsi_state = ("RSI Oversold => %i" % rsi)
+  elif (rsi > 20) and (rsi < 40):
+    rsi_state = ("RSI Slightly Oversold => %i" % rsi)
+  elif (rsi > 40) and (rsi < 60):
+    rsi_state = ("RSI Stable => %i" % rsi)
+  elif (rsi > 60) and (rsi < 75):
+    rsi_state = ("RSI Slightly Overbought => %i" % rsi)
+  elif (rsi > 75):
+    rsi_state = ("Overbought  => %i" % rsi)
+
+  telegram_bot_sendtext(f'Pair: *'+ pair + '*\n\nOpen Price:' + str(df.Open.iloc[-1])+' €'+ '\nClose Price: ' + str(df.Close.iloc[-1])+ ' €' + '\nDiff Open/Close is %.4f' % diff + ' €' +  '\n' + str(rsi_state))
 
 
-strategy('ADAEUR', '1m', '50')
+strategy('BNBEUR', '1m', '50')
 
 
 
