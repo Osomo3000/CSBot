@@ -49,7 +49,8 @@ def calcRSI (df):
 def strategy(pair,interval,past):
   df = getData(pair,interval,past)
   calcRSI(df)
-  diff = df.Open.iloc[-1] - df.Close.iloc[-1]
+  diff = df.Close.iloc[-1] - df.Open.iloc[-1]
+
   rsi = int(df.RSI.iloc[-1])
   if (rsi > 0) and (rsi < 20):
    rsi_state = ("RSI Oversold => %i" % rsi)
@@ -62,10 +63,14 @@ def strategy(pair,interval,past):
   elif (rsi > 75):
     rsi_state = ("Overbought  => %i" % rsi)
 
-  telegram_bot_sendtext(f'Pair: *'+ pair + '*\n\nOpen Price:' + str(df.Open.iloc[-1])+' €'+ '\nClose Price: ' + str(df.Close.iloc[-1])+ ' €' + '\nDiff Open/Close is %.4f' % diff + ' €' +  '\n' + str(rsi_state))
+  telegram_bot_sendtext(f'Pair: *'+ pair + '*\n\nOpen Price:' + str(df.Open.iloc[-1])+' €'+ '\nClose Price: ' + str(df.Close.iloc[-1])+ ' €' + '\nDiff Open/Close is %.2f' % diff + ' €' +  '\n' + str(rsi_state))
+  #with open(pair + '.csv', 'w', newline='') as file:
+    #writer = csv.writer(file, delimiter=';')
+    #writer.writerow(["Time","Open Price", "Close Price", "Diff Open/Close", "RSI"])
+    #writer.writerow([str(df.Time.iloc[-1]),str(df.Open.iloc[-1]),str(df.Close.iloc[-1]),diff,str(rsi_state)])
+    #file.close
 
-
-strategy('BNBEUR', '1m', '50')
+strategy('BTCEUR', '1m', '50')
 
 
 
